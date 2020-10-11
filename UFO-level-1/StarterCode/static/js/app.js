@@ -1,28 +1,34 @@
 // from data.js
 let tableData = data;
 
+tableData.forEach(appendTable);
+
 let button = d3.select("#filter-btn");
-
-let form = d3.select("#form");
-
 button.on("click", runEnter);
-form.on("submit", runEnter);
 
+// Complete the event handler function for the form
 function runEnter() {
+    d3.select("tbody").html("");
     d3.event.preventDefault();
-
     let inputElement = d3.select("#datetime");
+
     let inputValue = inputElement.property('value');
 
     console.log(inputValue);
     console.log(tableData);
 
-    let table = tableData.filter(data => tableData.datetime === inputValue);
+    let filteredData = tableData.filter(table => table.datetime === inputValue);
 
-    console.log(table);
+    console.log(filteredData);
 
-    let date = 
-
+    filteredData.forEach(appendTable);
 };
 
-
+function appendTable(report) {
+    let tbody = d3.select("tbody");
+    let row = tbody.append("tr");
+    Object.entries(report).forEach(([key, value]) => {
+        let cell = row.append("td");
+        cell.text(value)
+    })
+};
